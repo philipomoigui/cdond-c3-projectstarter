@@ -338,7 +338,7 @@ jobs:
             --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
-            if curl -s "${API_URL}/api/status" | grep "ok"
+            if curl -s "${API_URL}/api/status" --connection-timeout 5 --max-time 10 | grep "ok"
             then
                 return 0
             else
@@ -356,10 +356,10 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - revert-migrations:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}  
+      # - destroy-environment:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - revert-migrations:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}  
 
   # cloudfront-update:
   #   docker:
