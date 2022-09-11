@@ -237,8 +237,8 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            # npm install > /dev/null
-            # npm run build > /dev/null
+            # npm install
+            # npm run build
             npm run migrations >> migrations_dump.txt
             cat migrations_dump.txt
       - run:
