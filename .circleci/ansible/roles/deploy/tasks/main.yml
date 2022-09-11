@@ -34,21 +34,5 @@
 - name: start app
   become: yes
   shell: |
-    npm run migrations
     pm2 delete all
-    export $(grep TYPEORM_HOST /home/ubuntu/.env) && pm2 start npm -- start
-- name: check env vars
-  shell: cat /home/ubuntu/.env
-  register: myecho
-- name: check pm2 log
-  become: yes
-  shell: pm2 logs --nostream
-  register: pm2Log
-- name: Debug command
-  debug:
-    var: myecho
-    verbosity: 2
-- name: Show PM2 log
-  debug:
-    var: pm2Log
-    verbosity: 2
+    pm2 start npm -- start
