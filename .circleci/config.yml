@@ -384,10 +384,9 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}   
-
   cleanup:
     docker:
-      # Docker image here
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -409,7 +408,6 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
             
-
 workflows:
   default:
     jobs:
