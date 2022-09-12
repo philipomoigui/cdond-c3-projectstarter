@@ -35,4 +35,7 @@
   become: yes
   shell: |
     pm2 delete all
-    pm2 start npm -- start
+    export $(grep TYPEORM_HOST /home/ubuntu/.env) && pm2 start npm -- start
+- name: check env vars
+  shell: cat /home/ubuntu/.env
+  register: myecho
