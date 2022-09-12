@@ -402,31 +402,31 @@ jobs:
             #   echo "$OldWorkflowID==$CurrentWorkflowID => same work flow id"
             # fi 
 
-  add-prometheus-node-exporter:
-    docker:
-      - image: python:3.10-alpine3.16
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "31:7c:1d:d5:37:1c:ca:1f:6d:28:5b:94:ac:f2:14:f2"
-      - run:
-          name: Install deps
-          command: |
-            apk add --update aws-cli tar gzip ansible nodejs npm
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Setup Prometheus Node Exporter
-          command: |
-            cd .circleci/ansible
-            cat inventory.txt
-            ansible-playbook -i inventory.txt node-exporter.yml
-      # Here's where you will add some code to rollback on failure
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - revert-migrations:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+  # add-prometheus-node-exporter:
+  #   docker:
+  #     - image: python:3.10-alpine3.16
+  #   steps:
+  #     - checkout
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "31:7c:1d:d5:37:1c:ca:1f:6d:28:5b:94:ac:f2:14:f2"
+  #     - run:
+  #         name: Install deps
+  #         command: |
+  #           apk add --update aws-cli tar gzip ansible nodejs npm
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: Setup Prometheus Node Exporter
+  #         command: |
+  #           cd .circleci/ansible
+  #           cat inventory.txt
+  #           ansible-playbook -i inventory.txt node-exporter.yml
+  #     # Here's where you will add some code to rollback on failure
+  #     - destroy-environment:
+  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+  #     - revert-migrations:
+  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
             
 workflows:
   default:
@@ -457,8 +457,6 @@ workflows:
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
-          requires: [smoke-test]
-      - add-prometheus-node-exporter:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
