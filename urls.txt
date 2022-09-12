@@ -1,0 +1,9 @@
+1. Git Repo: https://github.com/philipomoigui/cdond-c3-projectstarter
+
+2. S3 Url: http://udapeople-476bde3.s3-website-us-east-1.amazonaws.com/#/employees
+
+3. CloudFront: http://d18tnze5fnb3ce.cloudfront.net/#/employees
+
+4. Backend Url: http://35.171.24.201:3030/api/status
+
+5. Prometheus Server: http://ec2-3-94-9-226.compute-1.amazonaws.com:9090/targets
